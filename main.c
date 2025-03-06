@@ -132,7 +132,7 @@ void update(User *user) {
             printf("Enter new height: ");
             scanf("%f", &user->height);
             user->bmi = user->weight / (user->height * user->height);
-            printf("\nBMI Updated: %f", user->bmi);
+            printf("\nBMI Updated: %.2f", user->bmi);
             break;
         default:
             printf("Invalid choice.\n");
@@ -140,22 +140,37 @@ void update(User *user) {
     }
 }
 
-int main() {
+void menu(User users[MAX_USERS], int *userCount, int userIndex){
+    int ans2;
+
+    while(1){
+        printf("\n******** MENU ********\n");
+        printf("Update Your Information (1)\n");
+        printf("Log out (2)\n");
+        scanf("%d", &ans2);
+
+        if (ans2 == 1) {
+            update(&users[userIndex]);
+            saveUsers(users, *userCount);
+        } else if (ans2 == 2) {
+            printf("Logging out.\n");
+            break;
+        } else {
+            printf("Invalid choice\n");
+        }
+    }
+}
+
+int main(){
+
     User users[20];
     int userCount = 0;
     int userIndex = -1;
-    int ans2;
 
     loginSignUp(users, &userCount, &userIndex);
-    
-    if (userIndex != -1) {
-        printf("\n******** MENU ********\n");
-        printf("Update Your Information (1): ");
-        scanf("%d", &ans2);
-        if (ans2 == 1) {
-            update(&users[userIndex]);
-            saveUsers(users, userCount);
-        }
+
+    if(userIndex != -1){
+        menu(users, &userCount, userIndex);
     }
     return 0;
 }
