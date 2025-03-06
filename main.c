@@ -7,7 +7,6 @@
 typedef struct {
     char username[30];
     char password[20];
-
     float weight;
     float height;
     float bmi;
@@ -116,24 +115,31 @@ void loginSignUp(User users[MAX_USERS], int *userCount, int *userIndex) {
 void update(User *user) {
     int ans1;
     printf("What would you like to change? \n");
-    printf("Weight (1) \n");
-    printf("Height (2) \n");
+    printf("Password (1)\n");
+    printf("Weight (2) \n");
+    printf("Height (3) \n");
     scanf("%d", &ans1);
     getchar();
     
     switch (ans1) {
         case 1:
+            printf("Enter new password: ");
+            scanf("%s", &user->password);
+            printf("\nNew password: %s \n", user->password);
+            break;
+        case 2:
             printf("Enter new weight: ");
             scanf("%f", &user->weight);
             user->bmi = user->weight / (user->height * user->height);
             printf("\nBMI Updated: %f", user->bmi);
             break;
-        case 2:
+        case 3:
             printf("Enter new height: ");
             scanf("%f", &user->height);
             user->bmi = user->weight / (user->height * user->height);
             printf("\nBMI Updated: %.2f", user->bmi);
             break;
+        
         default:
             printf("Invalid choice.\n");
             return;
